@@ -5,7 +5,7 @@ var baseURL;
 if (process.env.NODE_ENV === 'development') {
   baseURL = "http://localhost:8080/api"
 } else {
-  baseURL = "https://vtbridges-api.herokuapp.com/api"
+  baseURL = "https://cors-anywhere.herokuapp.com/https://vtbridges-api.herokuapp.com/api"
 };
 
 export default axios.create({
