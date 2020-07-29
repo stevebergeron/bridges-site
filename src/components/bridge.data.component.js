@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import DataService from "../services/data.service";
-import { Carousel } from 'react-bootstrap';
+import { Transformation, CloudinaryContext, Image } from 'cloudinary-react';
+const axios = require('axios');
 
 export default class BridgeDataDisplay extends Component {
   constructor(props) {
@@ -10,12 +11,11 @@ export default class BridgeDataDisplay extends Component {
       wgn: null,
       activeBridge: null,
       activeArticles: null,
-      activePhotos: null,
+      activePhotos: [],
     };
   };
-  
+
   render() {
-    if (this.props.wgn) {
       DataService.findByWGN(this.props.wgn)
         .then(response => {
           this.setState({
@@ -25,55 +25,44 @@ export default class BridgeDataDisplay extends Component {
           });
         })
         .catch(e => { console.log(e); });
-    }
 
     return (
       <div>
         {this.state.activeBridge ?
         (
         <div>
-          <p>{this.state.activeBridge.name}</p>
-          <p>{this.state.activeBridge.wgn}</p>
+          <h3 className="text-light">{this.state.activeBridge.name}</h3>
               <div>
-                <Carousel>
-                  <Carousel.Item>
-                    <img
-                      src="../../images/scott 1.jpg"
-                      alt="First slide"
-                    />
-                    <Carousel.Caption>
-                      <h3>First slide label</h3>
-                      <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                    </Carousel.Caption>
-                  </Carousel.Item>
-                  <Carousel.Item>
-                    <img
-                      src="../../images/scott 1.jpg"
-                      alt="Second slide"
-                    />
+              <div className="gallery">
+                  <CloudinaryContext cloudName="hjugvucxs">
+                    <div className="responsive">
+                      {this.state.activePhotos.map(data => {
+                        return (
+                          <div className="responsive" key={data.id}>
 
-                    <Carousel.Caption>
-                      <h3>Second slide label</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </Carousel.Caption>
-                  </Carousel.Item>
-                  <Carousel.Item>
-                    <img
-                      src="../../images/scott 1.jpg"
-                      alt="Third slide"
-                    />
+                            <Image publicId={data.link}>
+                            <Transformation
+                                                        crop="scale"
+                                                        width="300"
+                                                        height="200"
+                                                        dpr="auto"
+                                                        responsive_placeholder="blank"
+                                                    />
+                            </Image>
+                            
+                          </div>
 
-                    <Carousel.Caption>
-                      <h3>Third slide label</h3>
-                      <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                    </Carousel.Caption>
-                  </Carousel.Item>
-                </Carousel>
+                        )
+                      })
+                      }
+                    </div>
+                  </CloudinaryContext>
+                </div>
               </div>
             </div>
         ) :
         ( 
-           "This will be the intro..."
+           <h3 className="text-light">This will be the intro...</h3>
         ) }
       </div>
     )

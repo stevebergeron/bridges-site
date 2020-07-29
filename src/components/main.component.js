@@ -9,6 +9,7 @@
 import React, { Component } from "react";
 import DataService from "../services/data.service";
 import BridgeDataDisplay from "./bridge.data.component";
+import { Nav, Row } from "react-bootstrap";
 
 export default class Main extends Component {
   constructor(props) {
@@ -44,22 +45,26 @@ export default class Main extends Component {
     const {bridges, currentIndex } = this.state;
 
     return (
-      <div className="row">
-        <div className="sidebar-sticky">
-          <ul className="list-group">
-            {bridges && 
-              bridges.map((bridge, index) => (
-                <li className={ "list-group-item " + (index === currentIndex ? "active" : "") }
-                    onClick={() => this.setActiveBridge(bridge, index)}
-                    key={index} >
-                  {bridge.name}
-                </li>
-              ))}
-          </ul>
-        </div>
-        <div className="col-md-6">
-          <BridgeDataDisplay wgn={this.state.activeBridge && this.state.activeBridge.wgn} />
-        </div>
+      <div>
+        <Row>
+          <Nav className="flex-column">
+            <Nav.Link 
+                onClick={() => this.setActiveBridge(null, -1)}
+                className={"bg-secondary list-group-item " +
+                 (currentIndex === -1 ? "text-warning" : "text-light")}>Home</Nav.Link>
+            {bridges && bridges.map((bridge, index) => (
+              <Nav.Link key={index}
+                onClick={() => this.setActiveBridge(bridge, index)}
+                className={"bg-secondary list-group-item " +
+                 (index === currentIndex ? "text-warning" : "text-light")}>
+                {bridge.name}
+              </Nav.Link>
+            ))}
+          </Nav>
+          <div className="col-md-9">
+            <BridgeDataDisplay wgn={this.state.activeBridge && this.state.activeBridge.wgn} />
+          </div>
+        </Row>
       </div>
     );
   }

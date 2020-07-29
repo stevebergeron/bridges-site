@@ -15,13 +15,15 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Navbar bg="dark" variant="dark" sticky="top">
-          <NavbarBrand href="/bridges" >
-            Vermont Covered Bridges (on Two Wheels!)
-            </NavbarBrand>
-        </Navbar>
         <Container>
-          <Route exact path={["/", "/bridges"]} component={Main} />
+          <Navbar bg="dark" variant="dark" sticky="top">
+            <NavbarBrand href="/bridges" >
+              <h3 className="text-warning">Vermont Covered Bridges (on Two Wheels!)</h3>
+            </NavbarBrand>
+          </Navbar>
+          <Container>
+            <Route exact path={["/", "/bridges"]} component={Main} />
+          </Container>
         </Container>
       </Router>
     );
