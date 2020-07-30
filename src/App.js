@@ -1,36 +1,33 @@
+/**
+ * App Component of the Vermont Covered Bridges Website
+ * This component is the main page display engine
+ * 
+ * Steven Bergeron
+ * July 2020
+ */
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
-
-import BridgeList from "./components/bridges-list.component";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Main from "./components/main.component";
+import { Navbar, NavbarBrand, Container } from "react-bootstrap";
+import './css/dashboard.css'
 
 class App extends Component {
   render() {
     return (
-      <Router>
-        <div>
-          <nav className="navbar navbar-expand navbar-dark bg-dark">
-            <a href="/bridges" className="navbar-brand">
-              Vermont Covered Bridges
-            </a>
-            <div className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link to={"/tutorials"} className="nav-link">
-                  Tutorials
-                </Link>
-              </li>
-            </div>
-          </nav>
-
-          <div className="container mt-3">
-            <Switch>
-              <Route exact path={["/", "/bridges"]} component={BridgeList} />
-              
-            </Switch>
+      <Container fluid>
+        <Navbar bg="dark" variant="dark" sticky="top">
+          <NavbarBrand href="/bridges" className="col-md-6">
+            <h3 className="text-warning">Vermont Covered Bridges on Two Wheels</h3>
+            
+          </NavbarBrand>
+          <div>
+            <h6 className="text-warning text-right">
+              <em>A photographic journey to Vermont's Covered Bridges</em>
+            </h6>
           </div>
-        </div>
-      </Router>
+        </Navbar>
+        <Main />
+      </Container>
     );
   }
 }
