@@ -16,7 +16,7 @@ export default class BridgeArticlesDisplay extends Component {
           (
               this.props.articles.map(article => (
               <div key={article.id}><p className="text-warning">{article.header}</p>
-            <p className="text-light">{article.text}</p></div>
+            <p className="text-light text-justify">{article.text}</p></div>
             ))
           ) :
           (

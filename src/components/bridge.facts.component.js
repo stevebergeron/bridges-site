@@ -6,7 +6,6 @@
  * July 2020
  */
 import React, { Component } from "react";
-import { Card, Row, Col } from "react-bootstrap";
 import '../css/my.css';
 
 export default class BridgeFactsDisplay extends Component {
@@ -17,63 +16,63 @@ export default class BridgeFactsDisplay extends Component {
         {this.props.bridge ?
           (
             <>
-              <Card bg="secondary" style={{ width: '20rem' }}>
+              <div className="card bg-secondary" style={{ width: '20rem' }}>
 
-                <Card.Body className="text-light">
-                  <Card.Title className="font-weight-bold text-warning">Quick Facts</Card.Title>
-                  <Row>
-                    <Col sm={5} className="left-col"><span>World Guide Number:</span></Col>
-                    <Col><span>{this.props.bridge.wgn}</span></Col>
-                  </Row>
-                  <Row>
-                    <Col sm={5} className="left-col"><span >Current Use:</span></Col>
-                    <Col><span>{this.props.bridge.current_use}</span></Col>
-                  </Row>
-                  <Row>
-                    <Col sm={5} className="left-col"><span>County:</span></Col>
-                    <Col><span>{this.props.bridge.county}</span></Col>
-                  </Row>
-                  <Row>
-                    <Col sm={5} className="left-col"><span>Municipality:</span></Col>
-                    <Col><span>{this.props.bridge.municipality}</span></Col>
-                  </Row>
-                  <Row>
-                    <Col sm={5} className="left-col"><span>Location:</span></Col>
-                    <Col><span>{this.props.bridge.loc_desc}</span></Col>
-                  </Row>
-                  <Row>
-                    <Col sm={5} className="left-col"><span>Crosses:</span></Col>
-                    <Col><span>{this.props.bridge.crosses}</span></Col>
-                  </Row>
-                  <Row>
-                    <Col sm={5} className="left-col"><span>GPS:</span></Col>
-                    <Col><a className="text-light"
+                <div className="card-body text-light">
+                  <div className="card-title font-weight-bold text-warning">Quick Facts</div>
+                  <div className="row">
+                    <div className="col left-col"><span>World Guide Number:</span></div>
+                    <div className="col"><span>{this.props.bridge.wgn}</span></div>
+                  </div>
+                  <div className="row">
+                    <div className="col left-col"><span >Current Use:</span></div>
+                    <div className="col"><span>{this.props.bridge.current_use}</span></div>
+                  </div>
+                  <div className="row">
+                    <div className="col left-col"><span>County:</span></div>
+                    <div className="col"><span>{this.props.bridge.county}</span></div>
+                  </div>
+                  <div className="row">
+                    <div className="col left-col"><span>Municipality:</span></div>
+                    <div className="col"><span>{this.props.bridge.municipality}</span></div>
+                  </div>
+                  <div className="row">
+                    <div className="col left-col"><span>Location:</span></div>
+                    <div className="col"><span>{this.props.bridge.loc_desc}</span></div>
+                  </div>
+                  <div className="row">
+                    <div className="col left-col"><span>Crosses:</span></div>
+                    <div className="col"><span>{this.props.bridge.crosses}</span></div>
+                  </div>
+                  <div className="row">
+                    <div className="col left-col"><span>GPS:</span></div>
+                    <div className="col"><a className="text-light"
                       href={'https://www.google.com/maps/place/'
                         + this.props.bridge.long + ', '
                         + this.props.bridge.lat}
                       target="_blank"
                       rel="noopener noreferrer">
                       {this.props.bridge.long}, {this.props.bridge.lat}</a>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm={5} className="left-col"><span>Built:</span></Col>
-                    <Col><span>{this.props.bridge.built}</span></Col>
-                  </Row>
-                  <Row>
-                    <Col sm={5} className="left-col"><span>Length:</span></Col>
-                    <Col><span>{this.props.bridge.length} feet</span></Col>
-                  </Row>
-                  <Row>
-                    <Col sm={5} className="left-col"><span>Truss Design:</span></Col>
-                    <Col><span>{this.props.bridge.truss}</span></Col>
-                  </Row>
-                  <Row>
-                    <Col sm={5} className="left-col"><span>National Register?</span></Col>
-                    <Col><span>{this.props.bridge.nhrp}</span></Col>
-                  </Row>
-                </Card.Body>
-              </Card>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col left-col"><span>Built:</span></div>
+                    <div className="col"><span>{this.props.bridge.built}</span></div>
+                  </div>
+                  <div className="row">
+                    <div className="col left-col"><span>Length:</span></div>
+                    <div className="col"><span>{this.props.bridge.length} feet</span></div>
+                  </div>
+                  <div className="row">
+                    <div className="col left-col"><span>Truss Design:</span></div>
+                    <div className="col"><span>{this.props.bridge.truss}</span></div>
+                  </div>
+                  <div className="row">
+                    <div className="col left-col"><span>National Register?</span></div>
+                    <div className="col"><span>{this.props.bridge.nhrp}</span></div>
+                  </div>
+                </div>
+              </div>
             </>
           ) :
           (

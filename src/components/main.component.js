@@ -11,7 +11,8 @@ import DataService from "../services/data.service";
 import BridgePhotoDisplay from "./bridge.photo.component";
 import BridgeFactsDisplay from "./bridge.facts.component";
 import BridgeArticlesDisplay from "./bridge.articles.component";
-import { Nav, Row, Col } from "react-bootstrap";
+import '../css/my.css';
+
 
 export default class Main extends Component {
   constructor(props) {
@@ -19,19 +20,9 @@ export default class Main extends Component {
     this.setActiveBridge = this.setActiveBridge.bind(this);
 
     this.state = {
-      bridges: [],
-      activeBridge: null,
-      currentIndex: -1,
+      activeBridge: "",
+      currentIndex: -1
     };
-  }
-
-  // once component is mounted, retreive the bridge list
-  componentDidMount() {
-    DataService.findAllBridgeNames()
-      .then(response => {
-        this.setState({ bridges: response.data });
-      })
-      .catch(e => { console.log(e); });
   }
 
   // set the active bridge in state
@@ -42,58 +33,80 @@ export default class Main extends Component {
       this.setState({
         activeBridge: bridge,
         currentIndex: index,
-        activeBridgeData: response.data.bridges[0],
+        activeBridgeData: response.data.bridges && response.data.bridges[0],
         activeArticles: response.data.articles,
         activePhotos: response.data.photos
       });
     })
     .catch(e => { console.log(e); });
-    
-    
+  }
+
+  menuHandler(menuItems) {
+    return menuItems.map((county, index) => (
+      <>
+      <div key={index+county.name}
+        className="nav-link dropdown collapsed bg-secondary text-light dropdown-toggle" 
+        data-toggle="collapse"
+        data-target={"#"+county.name} >
+          {county.name}
+      </div>
+      <div className="collapse"
+            key={county.name}
+            id={county.name}
+            aria-expanded="false">
+          {this.subMenuHandler(county.children)}
+      </div>
+      </>
+    ))
+  }
+
+  subMenuHandler(subMenuItems) {
+    let activeBridge = this.state.activeBridge;
+    return subMenuItems.map((bridge, index) => (
+      <div key={index+bridge.name}
+            onClick={() => this.setActiveBridge(bridge, index)}
+            className={"nav-link bg-secondary list-group-item " +
+          (bridge === activeBridge && activeBridge.name ? "text-warning" : "text-light")}>
+        {bridge.name}
+      </div>
+    ))
   }
 
   render() {
-    const {bridges, currentIndex } = this.state;
+    const { currentIndex } = this.state;
 
     return (
-      <><Row>
-        <Col sm={2}>
+       <div className="row">
+         <div className="col-sm-2">
           <div className="sidebar sidebar-sticky">
-            <Nav.Link
+            <div key="home"
               onClick={() => this.setActiveBridge(null, -1)}
-              className={"bg-secondary list-group-item home-link " +
+              className={"nav-link bg-secondary list-group-item home-link " +
                 (currentIndex === -1 ? "text-warning" : "text-light")}>Home
-            </Nav.Link>
-
-            {bridges && bridges.map((bridge, index) => (
-            <Nav.Link key={index}
-              onClick={() => this.setActiveBridge(bridge, index)}
-              className={"bg-secondary list-group-item " +
-                (index === currentIndex ? "text-warning" : "text-light")}>
-              {bridge.name}
-            </Nav.Link>
-            ))}
+            </div>
+            {this.menuHandler(this.props.bridges.data)}
           </div>
-        </Col>
-        <Col sm={7}>
-          <Row>
-            <Col sm={9}>
+        </div>
+        <div className="col">
+          <div className="row">
+            <div className="col-sm-6">
               <BridgePhotoDisplay
                 bridge={this.state.activeBridge}
                 photos={this.state.activePhotos} />
-            </Col>
-            <Col sm={2}>
+            </div>
+            <div className="col">
               <BridgeFactsDisplay
                 bridge={this.state.activeBridgeData} />
-            </Col>
-          </Row>
-          <Row>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-9">
             <BridgeArticlesDisplay
-          articles={this.state.activeArticles} />
-          </Row>
-        </Col>
-      </Row>
-     </>
+              articles={this.state.activeArticles} />
+          </div>
+          </div>
+        </div>
+     </div>
     );
   }
 }
