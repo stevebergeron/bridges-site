@@ -8,7 +8,6 @@
 import React, { Component } from "react";
 import { Image, Transformation } from 'cloudinary-react';
 import { Carousel, CarouselItem } from "react-bootstrap";
-import Intro from "./intro.component";
 import '../css/my.css';
 
 export default class BridgePhotoDisplay extends Component {
@@ -17,8 +16,7 @@ export default class BridgePhotoDisplay extends Component {
 
     return (
       <div>
-        {this.props.bridge ?
-          (
+        
             <div>
               <h3 className="text-light">{this.props.bridge.name} Bridge</h3>
               <div className="border border-light rounded-lg">
@@ -45,10 +43,7 @@ export default class BridgePhotoDisplay extends Component {
                 </Carousel>
               </div>
             </div>
-          ) :
-          (
-            <><Intro /></>
-          )}
+          
       </div>
     )
   }

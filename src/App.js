@@ -31,14 +31,27 @@ class App extends Component {
 
     return (
       <div className="container-fluid">
-        <div className="navbar bg-dark sticky-top">
-          <div className="navbar-brand col-md-6" href="/bridges">
-            <h3 className="text-warning">Vermont Covered Bridges on Two Wheels</h3>
-          </div>
-          <div>
-            <h6 className="text-warning text-right">
-              <em>A photographic journey to Vermont's Covered Bridges</em>
-            </h6>
+        <div className="navbar navbar-expand-md bg-dark sticky-top p-0">
+          <div className="container-fluid">
+        
+            <div >
+              <button className="navbar-toggler navbar-dark" type="button"
+                data-toggle="collapse" data-target="#sidenav"
+                aria-controls="sidenav" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+              </button>
+            </div>
+            
+              <div className="text-warning">
+                <h5>Vermont Covered Bridges... on Two Wheels</h5>
+              </div>
+              <div >
+                <div>
+                  <h6 className="text-warning">
+                    <em>A photographic journey to Vermont's Covered Bridges</em>
+                  </h6>
+                </div>
+            </div>
           </div>
         </div>
         <Main bridges={this.state.bridges} />

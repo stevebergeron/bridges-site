@@ -31,7 +31,7 @@
 
 .sidebar-sticky {
   position: absolute;
-  top: 75px;
+  top: 90px;
   /* height: calc(100vh - 48px); */
   /* padding-top: .5rem; */
   overflow-x: hidden;

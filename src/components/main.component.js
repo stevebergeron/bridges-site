@@ -8,6 +8,7 @@
  */
 import React, { Component } from "react";
 import DataService from "../services/data.service";
+import Intro from "./intro.component";
 import BridgePhotoDisplay from "./bridge.photo.component";
 import BridgeFactsDisplay from "./bridge.facts.component";
 import BridgeArticlesDisplay from "./bridge.articles.component";
@@ -25,9 +26,21 @@ export default class Main extends Component {
     };
   }
 
+  componentDidMount() {
+    if (window.matchMedia("(max-width: 576px)").matches) {
+      document.getElementById('sidenav').classList.add('collapsed')
+      document.getElementById('sidenav').classList.add('collapse')
+    }
+  }
+
+  checkCollapseOnClick() {
+    if (window.matchMedia("(max-width: 576px)").matches) {
+      return "collapse" }
+      else return "show";
+  }
+
   // set the active bridge in state
   setActiveBridge(bridge, index) {
-    
     DataService.findByWGN(bridge && bridge.wgn)
     .then(response => {
       this.setState({
@@ -43,27 +56,27 @@ export default class Main extends Component {
 
   menuHandler(menuItems) {
     return menuItems.map((county, index) => (
-      <>
-      <div key={index+county.name}
+      <div key={county.name}>
+      <div 
         className="nav-link dropdown collapsed bg-secondary text-light dropdown-toggle" 
         data-toggle="collapse"
         data-target={"#"+county.name} >
           {county.name}
       </div>
       <div className="collapse"
-            key={county.name}
             id={county.name}
             aria-expanded="false">
           {this.subMenuHandler(county.children)}
       </div>
-      </>
+      </div>
     ))
   }
 
   subMenuHandler(subMenuItems) {
     let activeBridge = this.state.activeBridge;
     return subMenuItems.map((bridge, index) => (
-      <div key={index+bridge.name}
+      <div key={bridge.wgn}
+            data-toggle={this.checkCollapseOnClick()} data-target="#sidenav"
             onClick={() => this.setActiveBridge(bridge, index)}
             className={"nav-link bg-secondary list-group-item " +
           (bridge === activeBridge && activeBridge.name ? "text-warning" : "text-light")}>
@@ -78,16 +91,20 @@ export default class Main extends Component {
     return (
        <div className="row">
          <div className="col-sm-2">
-          <div className="sidebar sidebar-sticky">
+          <div id="sidenav" className="sidebar sidebar-expand-md sidebar-sticky sidebar-toggler">
             <div key="home"
+            data-toggle={this.checkCollapseOnClick()} data-target="#sidenav"
               onClick={() => this.setActiveBridge(null, -1)}
-              className={"nav-link bg-secondary list-group-item home-link " +
-                (currentIndex === -1 ? "text-warning" : "text-light")}>Home
+              className={"nav-link bg-secondary list-group-item home-link  " +
+                (currentIndex === -1 ? "text-warning" : "text-light")
+                }>Home
             </div>
             {this.menuHandler(this.props.bridges.data)}
           </div>
         </div>
         <div className="col">
+        {this.state.activeBridge ?
+          (<>
           <div className="row">
             <div className="col-sm-6">
               <BridgePhotoDisplay
@@ -103,8 +120,13 @@ export default class Main extends Component {
             <div className="col-sm-9">
             <BridgeArticlesDisplay
               articles={this.state.activeArticles} />
+            </div>
           </div>
-          </div>
+          </>) : (
+            <div className="col-sm-10">
+            <Intro />
+            </div>
+          )}
         </div>
      </div>
     );
