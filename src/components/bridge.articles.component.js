@@ -11,12 +11,13 @@ export default class BridgeArticlesDisplay extends Component {
 
   render() {
     return (
-      <div className="">
+      <div className="p-2">
         {this.props.articles ?
           (
-              this.props.articles.map(article => (
+            this.props.articles.map(article => (
               <div key={article.id}><p className="text-warning">{article.header}</p>
-            <p className="text-light">{article.text}</p></div>
+                <p className="text-light text-justify">{article.text}</p>
+              </div>
             ))
           ) :
           (
