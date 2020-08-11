@@ -13,6 +13,7 @@ import BridgePhotoDisplay from "./bridge.photo.component";
 import BridgeFactsDisplay from "./bridge.facts.component";
 import BridgeArticlesDisplay from "./bridge.articles.component";
 import '../css/my.css';
+import Terminology from "./terminology.component";
 
 
 export default class Main extends Component {
@@ -23,6 +24,10 @@ export default class Main extends Component {
     this.state = {
       activeBridge: "",
       currentIndex: -1,
+      activeBridgeData: null,
+      activePhotos: null,
+      activeArticles: null,
+      activePage: "home",
       photoHeight: 400
     };
   }
@@ -52,12 +57,23 @@ export default class Main extends Component {
         currentIndex: index,
         activeBridgeData: response.data.bridges && response.data.bridges[0],
         activeArticles: response.data.articles,
-        activePhotos: response.data.photos
+        activePhotos: response.data.photos,
+        activePage: ""
       });
     })
     .catch(e => { console.log(e); });
   }
 
+  // set the active page in state (if it's not one of the bridges)
+  setPage(page) {
+    this.setState({
+      activeBridge: null,
+      currentIndex: -1,
+      activePage: page
+    })
+  }
+
+  // Set up the left navigation menu (top level)
   menuHandler(menuItems) {
     return menuItems.map((county, index) => (
       <div key={county.name}>
@@ -65,7 +81,7 @@ export default class Main extends Component {
         className="nav-link dropdown collapsed bg-secondary text-light dropdown-toggle" 
         data-toggle="collapse"
         data-target={"#"+county.name} >
-          {county.name}
+          {county.name} County
       </div>
       <div className="collapse"
             id={county.name}
@@ -76,6 +92,7 @@ export default class Main extends Component {
     ))
   }
 
+  // Set up the left navigation menu sub-menus
   subMenuHandler(subMenuItems) {
     let activeBridge = this.state.activeBridge;
     return subMenuItems.map((bridge, index) => (
@@ -90,54 +107,77 @@ export default class Main extends Component {
   }
 
   render() {
-    const { currentIndex } = this.state;
+    const { activePage,
+            activeBridge, 
+            activeBridgeData,
+            activePhotos, 
+            activeArticles,
+            photoHeight } = this.state;
 
     return (
       <div className="row">
 
         {/* sidebar menu */}
-        <div className="col-sm-3">
+        <div className="col-lg-3">
           <div id="sidenav" className="sidebar sidebar-expand-md sidebar-sticky sidebar-toggler">
+            
+            {/* static menu items */}
             <div key="home"
               data-toggle={this.checkCollapseOnClick()} data-target="#sidenav"
-              onClick={() => this.setActiveBridge(null, -1)}
-              className={"nav-link bg-secondary list-group-item home-link  " +
-                (currentIndex === -1 ? "text-warning" : "text-light")
+              onClick={() => this.setPage("home")}
+              className={"nav-link bg-secondary list-group-item home-link pl-2 " +
+                (activePage.includes("home") ? "text-warning" : "text-light")
               }>Home
              </div>
+
+             <div key="term"
+              data-toggle={this.checkCollapseOnClick()} data-target="#sidenav"
+              onClick={() => this.setPage("term")}
+              className={"nav-link bg-secondary list-group-item pl-2 " +
+                (activePage.includes("term") ? "text-warning" : "text-light")
+              }>Bridge Terminology
+             </div>
+
+            {/* dynamically created menu items */}
             {this.menuHandler(this.props.bridges.data)}
           </div>
         </div>
 
-        
-
         {/* MAIN Content */}
         {/* If there a selected bridge... show the bridge stuff */}
-        <div className="col">
-          {this.state.activeBridge ?
+        <div id="main-content" className="col">
+          {activeBridge ?
             (<>
               <div className="row mt-3 mx-auto">
                 <div className="col">
                 <BridgePhotoDisplay
-                  bridge={this.state.activeBridge}
-                  photos={this.state.activePhotos}
-                  height={this.state.photoHeight} />
+                  bridge={activeBridge}
+                  photos={activePhotos}
+                  height={photoHeight} />
               </div>
               </div>
 
               <div className="row p-1">
-                <BridgeFactsDisplay bridge={this.state.activeBridgeData} />
+                <BridgeFactsDisplay bridge={activeBridgeData} />
               </div>
 
               <div className="row">
-                <BridgeArticlesDisplay articles={this.state.activeArticles} />
+                <BridgeArticlesDisplay articles={activeArticles} />
               </div>
             </>) :
             (
-              <div className="mt-3">
-                {/* No active bridge... show the "intro" page */}
+              /* No active bridge... show one of the "non-bridge" pages */
+              activePage && activePage.includes("home") ? ( 
+              <div className="mt-3">                
                 <Intro />
               </div>
+              )
+              : 
+              (
+              <div className="mt-3">                
+                <Terminology />
+              </div>
+              )
             )}
         </div>
       </div>
