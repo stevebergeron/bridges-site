@@ -70,6 +70,8 @@ export default class Intro extends Component {
           <li>Nelson, Joseph C. Spanning Time: Vermont's Covered Bridges. Shelburne, VT: New England, 1997.</li>
           <li>Nelson, Joseph C. VermontBridges.com. Vermont Covered Bridge Society web site.</li>
         </ul>
+
+        <h4 className="text-warning">All Content Copyright (c) Steven Bergeron</h4>
       </div>
     );
   }

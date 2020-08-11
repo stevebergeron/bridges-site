@@ -61,6 +61,7 @@ class App extends Component {
         </div>
 
         <Main bridges={this.state.bridges} />
+        
       </div>
     );
   }
