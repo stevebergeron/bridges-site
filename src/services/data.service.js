@@ -9,9 +9,10 @@ import http from "../http-common";
 
 class DataService {
   
-  // get an array of all bridges with their name and WGN
-  findAllBridgeNames() {
-    return http.get("/bridges");
+  // get a JSON representation of all bridges with their name and WGN
+  // and grouped by 
+  findAllMenuData() {
+    return http.get("/bridges/allcounties");
   }
 
   // get an object with all the content for one bridge base on its WGN

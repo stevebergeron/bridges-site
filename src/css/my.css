@@ -1,8 +1,3 @@
-.left-col {
-  text-align: right;
-  font-weight: bold
-}
-
 .carousel-caption {
   position: relative;
   left: auto;
@@ -16,3 +11,13 @@
   padding-bottom: 0.25rem;
   padding-left: 1.25rem;
 }
+
+@media (min-width: 576px) {
+  .navbar-expand-md .navbar-toggler {
+    display: none;
+  }
+  .sidebar-expand-md .sidebar-toggler {
+    display: none;
+  }
+}
+

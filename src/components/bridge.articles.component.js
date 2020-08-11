@@ -3,7 +3,7 @@
  * This component renders the article text for each bridge
  * 
  * Steven Bergeron
- * July 2020
+ * August 2020
  */
 import React, { Component } from "react";
 
@@ -11,12 +11,15 @@ export default class BridgeArticlesDisplay extends Component {
 
   render() {
     return (
-      <div className="">
+      <div className="p-2">
         {this.props.articles ?
           (
-              this.props.articles.map(article => (
-              <div key={article.id}><p className="text-warning">{article.header}</p>
-            <p className="text-light">{article.text}</p></div>
+            this.props.articles.map(article => (
+              <div key={article.id}
+                   className="text-light text-justify">
+                <p className="text-warning">{article.header}</p>
+                <p>{article.text}</p>
+              </div>
             ))
           ) :
           (
@@ -25,4 +28,5 @@ export default class BridgeArticlesDisplay extends Component {
       </div>
     );
   }
+
 }
