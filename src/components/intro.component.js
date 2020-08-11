@@ -72,6 +72,7 @@ export default class Intro extends Component {
         </ul>
 
         <h4 className="text-warning">All Content Copyright (c) Steven Bergeron</h4>
+        
       </div>
     );
   }
