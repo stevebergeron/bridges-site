@@ -22,7 +22,8 @@ export default class Main extends Component {
 
     this.state = {
       activeBridge: "",
-      currentIndex: -1
+      currentIndex: -1,
+      photoHeight: 400
     };
   }
 
@@ -30,6 +31,9 @@ export default class Main extends Component {
     if (window.matchMedia("(max-width: 576px)").matches) {
       document.getElementById('sidenav').classList.add('collapsed')
       document.getElementById('sidenav').classList.add('collapse')
+      this.setState({ photoHeight: 175})
+    } else {
+      this.setState({ photoHeight: 400})
     }
   }
 
@@ -89,46 +93,54 @@ export default class Main extends Component {
     const { currentIndex } = this.state;
 
     return (
-       <div className="row">
-         <div className="col-sm-2">
+      <div className="row">
+
+        {/* sidebar menu */}
+        <div className="col-sm-3">
           <div id="sidenav" className="sidebar sidebar-expand-md sidebar-sticky sidebar-toggler">
             <div key="home"
-            data-toggle={this.checkCollapseOnClick()} data-target="#sidenav"
+              data-toggle={this.checkCollapseOnClick()} data-target="#sidenav"
               onClick={() => this.setActiveBridge(null, -1)}
               className={"nav-link bg-secondary list-group-item home-link  " +
                 (currentIndex === -1 ? "text-warning" : "text-light")
-                }>Home
-            </div>
+              }>Home
+             </div>
             {this.menuHandler(this.props.bridges.data)}
           </div>
         </div>
+
+        
+
+        {/* MAIN Content */}
+        {/* If there a selected bridge... show the bridge stuff */}
         <div className="col">
-        {this.state.activeBridge ?
-          (<>
-          <div className="row">
-            <div className="col-sm-6">
-              <BridgePhotoDisplay
-                bridge={this.state.activeBridge}
-                photos={this.state.activePhotos} />
-            </div>
-            <div className="col">
-              <BridgeFactsDisplay
-                bridge={this.state.activeBridgeData} />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-9">
-            <BridgeArticlesDisplay
-              articles={this.state.activeArticles} />
-            </div>
-          </div>
-          </>) : (
-            <div className="col-sm-10">
-            <Intro />
-            </div>
-          )}
+          {this.state.activeBridge ?
+            (<>
+              <div className="row mt-3 mx-auto">
+                <div className="col">
+                <BridgePhotoDisplay
+                  bridge={this.state.activeBridge}
+                  photos={this.state.activePhotos}
+                  height={this.state.photoHeight} />
+              </div>
+              </div>
+
+              <div className="row p-1">
+                <BridgeFactsDisplay bridge={this.state.activeBridgeData} />
+              </div>
+
+              <div className="row">
+                <BridgeArticlesDisplay articles={this.state.activeArticles} />
+              </div>
+            </>) :
+            (
+              <div className="mt-3">
+                {/* No active bridge... show the "intro" page */}
+                <Intro />
+              </div>
+            )}
         </div>
-     </div>
+      </div>
     );
   }
 }
