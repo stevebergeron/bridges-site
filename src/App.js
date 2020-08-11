@@ -38,8 +38,8 @@ class App extends Component {
 
     return (
       <div className="container">
-        <div className="navbar navbar-expand-md bg-dark sticky-top p-3 border">
-          <div className="container">
+        <div className="navbar navbar-expand-md bg-dark sticky-top py-3 border">
+          <div className="container-fluid">
 
             {/* Hamburger menu button (if needed */}
             <button className="navbar-toggler navbar-dark" type="button"
