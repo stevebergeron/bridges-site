@@ -33,7 +33,7 @@ class App extends Component {
 
   render() {
     if (!this.state.bridges) {
-      return <div className="text-light">Loading menu...</div>
+      return <div className="text-light">Waking up the server... standby...</div>
     }
 
     return (
